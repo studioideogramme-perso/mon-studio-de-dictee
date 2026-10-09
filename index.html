@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111217">
+  <meta name="description" content="Créez une courte dictée à partir des mots à réviser et du temps de conjugaison choisi.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mon studio">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.png" type="image/png">
+  <link rel="apple-touch-icon" href="./icon.png">
+  <title>Mon studio de dictée — une révision à la fois</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Mon studio de Dictée, accueil">
+        <span>Mon studio de Dictée</span><span class="brand-exclaim" aria-hidden="true">!</span><span class="brand-exclaim brand-exclaim-second" aria-hidden="true">!</span>
+      </a>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Passer au mode clair" title="Passer au mode clair">
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg>
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.5A8.5 8.5 0 0 1 8.5 3.8 8.5 8.5 0 1 0 20.2 15.5Z"></path></svg>
+        <span id="theme-label">Mode clair</span>
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="intro" aria-labelledby="page-title">
+        <h1 id="page-title">Les mots prennent<br><span>toute leur place.</span></h1>
+        <p class="intro-copy">Quelques mots à apprendre, un temps à choisir : votre dictée s'apprend très simplement quand elle est plus ludique.</p>
+      </section>
+
+      <section class="workspace" aria-label="Créer une dictée">
+        <div class="form-panel">
+          <div class="section-heading">
+            <span class="step-number">01</span>
+            <div><h2>Les mots à réviser</h2><p>Ajoutez les mots à apprendre.</p></div>
+          </div>
+
+          <form id="word-form" class="word-entry">
+            <label class="sr-only" for="word-input">Un mot à ajouter</label>
+            <input id="word-input" type="text" maxlength="500" autocomplete="off" placeholder="Ex. : mystérieux" aria-describedby="word-hint">
+          <button class="add-button" type="submit"><span aria-hidden="true">+</span> Ajouter</button>
+            <button id="voice-button" class="voice-button" type="button" aria-label="Ajouter un mot à la voix" title="Ajouter un mot à la voix">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"></rect><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3m-4 0h8"></path></svg>
+            </button>
+          </form>
+          <p class="field-hint" id="word-hint">Saisissez les mots à apprendre.</p>
+          <p id="voice-status" class="voice-status" role="status" aria-live="polite"></p>
+          <div id="word-list" class="word-list" aria-live="polite" aria-label="Mots à réviser"></div>
+
+          <div class="divider"></div>
+          <div class="section-heading tense-heading">
+            <span class="step-number">02</span>
+            <div><h2>Le temps de la dictée</h2><p>Choisissez le temps à travailler.</p></div>
+          </div>
+          <label class="sr-only" for="tense-select">Temps de conjugaison</label>
+          <div class="select-wrap"><select id="tense-select">
+            <option value="present">Présent</option>
+            <option value="imparfait">Imparfait</option>
+            <option value="passe-compose">Passé composé</option>
+            <option value="futur">Futur simple</option>
+            <option value="passe-simple">Passé simple</option>
+          </select><span class="select-chevron" aria-hidden="true">⌄</span></div>
+
+          <div class="divider"></div>
+          <div class="section-heading tense-heading">
+            <span class="step-number">03</span>
+            <div><h2>L’âge de l’enfant</h2><p>Choisissez la tranche qui lui convient.</p></div>
+          </div>
+          <label class="sr-only" for="age-select">Âge de l’enfant</label>
+          <div class="select-wrap"><select id="age-select">
+            <option value="6-8">6 à 8 ans (texte simplifié)</option>
+            <option value="9-11">9 à 11 ans (texte plus complet)</option>
+            <option value="12-plus">+ de 11 ans (difficulté supérieure)</option>
+          </select><span class="select-chevron" aria-hidden="true">⌄</span></div>
+
+          <button id="generate-button" class="generate-button" type="button">
+            <span class="button-content">Créer ma dictée</span>
+          </button>
+        </div>
+
+        <section class="result-panel" aria-labelledby="result-title">
+          <div class="result-topline"><span class="result-label">VOTRE DICTÉE</span><span id="word-count" class="word-count">0 MOT</span></div>
+          <div id="empty-state" class="empty-state">
+            <h2 id="result-title">La page est à vous.</h2>
+            <p>Ajoutez quelques mots, puis lancez la dictée. Elle apparaîtra ici.</p>
+          </div>
+          <div id="dictation-content" class="dictation-content" hidden>
+            <div class="dictation-meta"><span id="dictation-tense"></span><span id="dictation-age"></span><span id="dictation-sentence-count"></span></div>
+            <h2 class="dictation-title">À vos crayons<span>.</span></h2>
+            <p id="dictation-text" class="dictation-text"></p>
+            <div class="result-actions">
+              <button id="regenerate-button" class="regenerate-button" type="button" aria-label="Générer une autre dictée" title="Générer une autre dictée">↻</button>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
