@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "Mon studio de Dictée",
-  "short_name": "Mon studio",
+  "name": "Dictée",
+  "short_name": "Dictée",
   "description": "Créez une courte dictée à partir des mots à réviser.",
   "lang": "fr-FR",
   "start_url": "./",

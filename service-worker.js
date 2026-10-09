@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mon-studio-dictee-v6';
+const CACHE_NAME = 'mon-studio-dictee-v7';
 const APP_SHELL = [
   './',
   './index.html',
